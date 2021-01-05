@@ -8,9 +8,10 @@ const defaultDrink = {
 };
 const DrinkInputGroup = ({ onCreate }) => {
   const [drink, setDrink] = useState(defaultDrink);
-  const handleCreate = () => {
+  const handleCreate = (e) => {
+    e.preventDefault();
     let alertArr = [];
-
+    console.log("sss", e);
     if (!drink.name) {
       alertArr.push("請填寫飲品名稱");
     }
@@ -68,7 +69,11 @@ const DrinkInputGroup = ({ onCreate }) => {
         setValue={handleOption}
         setClassName="form-control mr-1"
       />
-      <button onClick={handleCreate} className="btn btn-primary">
+      <button
+        onKeyPress={handleCreate}
+        onClick={handleCreate}
+        className="btn btn-primary"
+      >
         新增
       </button>
     </div>
