@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 const StyledEidtCard = styled.div`
@@ -50,17 +50,31 @@ const StyleButtonBlock = styled.div`
   margin-top: 10px;
 `;
 
-const EditCard = ({ editStatus, options, name, buyer, SetEditStatus }) => {
-  const nameRef = useRef(null);
-  const optionsRef = useRef(null);
-  const buyerRef = useRef(null);
+
+const EditCard = ({ onEditStatus, options, name, buyer, onUpdate }) => {
+  const [drink, setDrink] = useState({ name, options, buyer })
+
+  const handleConfirm = () => {
+    onUpdate && onUpdate(drink)
+    onEditStatus && onEditStatus()
+  };
 
   const handleCancel = () => {
-    SetEditStatus(!editStatus);
+    onEditStatus && onEditStatus()
   };
-  const handleConfirm = () => {
-    SetEditStatus(!editStatus);
-  };
+
+  const handleName = (e) => {
+    setDrink({ ...drink, name: e.target.value })
+  }
+
+  const handleOptions = (e) => {
+    setDrink({ ...drink, options: e.target.value })
+  }
+
+  const handleBuyer = (e) => {
+    setDrink({ ...drink, buyer: e.target.value })
+  }
+
   return (
     <StyledEidtCard className="position-absolute card mb-1">
       <div className="card-body">
@@ -69,8 +83,8 @@ const EditCard = ({ editStatus, options, name, buyer, SetEditStatus }) => {
             <StyleCardValueLabel htmlFor="name">飲品名稱:</StyleCardValueLabel>
             <StyleCardValueInput
               id="name"
-              ref={nameRef}
               placeholder={name}
+              onChange={handleName}
               className="card-title m-0 mr-1"
             />
             <StyleCardValueLabel htmlFor="options">
@@ -78,15 +92,15 @@ const EditCard = ({ editStatus, options, name, buyer, SetEditStatus }) => {
             </StyleCardValueLabel>
             <StyleCardValueInput
               id="options"
-              ref={optionsRef}
               placeholder={options}
+              onChange={handleOptions}
               className="card-text m-0"
             />
-            <StyleCardValueLabel htmlFor="options">訂購人:</StyleCardValueLabel>
+            <StyleCardValueLabel htmlFor="buyer">訂購人:</StyleCardValueLabel>
             <StyleCardValueInput
-              id="options"
-              ref={buyerRef}
+              id="buyer"
               placeholder={buyer}
+              onChange={handleBuyer}
               className="card-text m-0"
             />
           </div>

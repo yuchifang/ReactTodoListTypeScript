@@ -43,6 +43,19 @@ const App = () => {
     });
   };
 
+  const handleUpdate = id => drinkAllValue => {
+    //其中一個子層取得id 
+    const newdrinkArr = drinkArr.map(drink => {
+      if (drink.id === id) {
+        drink.buyer = drinkAllValue.buyer
+        drink.name = drinkAllValue.name
+        drink.options = drinkAllValue.options
+      }
+      return drink
+    })
+    setDrinksArr(newdrinkArr)
+  }
+
   const handleCreate = async (drink) => {
     setDrinksArr((prevState) => [
       ...prevState,
@@ -54,6 +67,7 @@ const App = () => {
       }
     ]);
   };
+
   return (
     <main className="py-5">
       <div className="container">
@@ -63,7 +77,7 @@ const App = () => {
           drinkArr.map((drink, index) => (
             <DrinkCard
               onDelete={handleDelete}
-              onUpdate={setDrinksArr}
+              onUpdate={handleUpdate}
               id={drink.id}
               key={index + drink.buyer}
               buyer={drink.buyer}

@@ -25,12 +25,15 @@ const StyledEidtDrinkCardButton = styled.button`
 
 const DrinkCard = ({ buyer, name, options, onDelete, onUpdate, id }) => {
   const [editStatus, SetEditStatus] = useState(false);
+
   const handleDelete = () => {
     onDelete && onDelete(id);
   };
-  const handleUpdate = () => {
+
+  const handleEditStatus = () => {
     SetEditStatus(!editStatus);
   };
+
   return (
     <div className="card mb-1">
       <div className="position-relative card-body">
@@ -43,7 +46,7 @@ const DrinkCard = ({ buyer, name, options, onDelete, onUpdate, id }) => {
           </button>
           <h5 className="card-title m-0 mr-1">{name}</h5>
           <div className="card-text m-0">{options}</div>
-          <StyledEidtDrinkCardButton onClick={handleUpdate}>
+          <StyledEidtDrinkCardButton onClick={handleEditStatus}>
             編輯
           </StyledEidtDrinkCardButton>
         </div>
@@ -55,7 +58,8 @@ const DrinkCard = ({ buyer, name, options, onDelete, onUpdate, id }) => {
         {editStatus && (
           <EditCard
             editStatus={editStatus}
-            SetEditStatus={SetEditStatus}
+            onEditStatus={handleEditStatus}
+            onUpdate={onUpdate(id)}
             options={options}
             name={name}
             buyer={buyer}

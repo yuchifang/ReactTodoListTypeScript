@@ -1,17 +1,19 @@
 import React, { useState } from "react";
-// import { drinkArr } from "./App";
 import DrinkInput from "./DrinkInput";
+
 const defaultDrink = {
   name: "",
   options: "",
   buyer: ""
 };
+
 const DrinkInputGroup = ({ onCreate }) => {
+
   const [drink, setDrink] = useState(defaultDrink);
-  const handleCreate = (e) => {
-    e.preventDefault();
+
+  const handleCreate = () => {
     let alertArr = [];
-    console.log("sss", e);
+
     if (!drink.name) {
       alertArr.push("請填寫飲品名稱");
     }
@@ -52,6 +54,7 @@ const DrinkInputGroup = ({ onCreate }) => {
   return (
     <div className="input-group mb-3">
       <DrinkInput
+        onKeyPress={handleCreate}
         placeholderText="飲品名稱"
         InputValue={drink.buyer}
         setValue={handleBuyer}
@@ -70,7 +73,6 @@ const DrinkInputGroup = ({ onCreate }) => {
         setClassName="form-control mr-1"
       />
       <button
-        onKeyPress={handleCreate}
         onClick={handleCreate}
         className="btn btn-primary"
       >
