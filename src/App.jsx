@@ -47,7 +47,7 @@ const App = () => {
     setDrinksArr((prevState) => [
       ...prevState,
       {
-        id: prevState.length + drink.buyerValue,
+        id: prevState.length + drink.options,
         name: drink.name,
         options: drink.options,
         buyer: drink.buyer
