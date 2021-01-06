@@ -1,16 +1,10 @@
 import React from "react";
-const DrinkInput = ({
-  placeholderText,
-  InputValue,
-  setValue,
-  setClassName
-}) => (
+const DrinkInput = React.forwardRef(({ placeholderText, setClassName }, ref) => (
   <input
     className={setClassName}
     placeholder={placeholderText}
     type="text"
-    value={InputValue}
-    onChange={setValue}
+    ref={ref}
   />
-);
+));
 export default DrinkInput;

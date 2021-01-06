@@ -24,14 +24,14 @@ const StyledEidtDrinkCardButton = styled.button`
 `;
 
 const DrinkCard = ({ buyer, name, options, onDelete, onUpdate, id }) => {
-  const [editStatus, SetEditStatus] = useState(false);
+  const [editStatus, setEditStatus] = useState(false);
 
   const handleDelete = () => {
     onDelete && onDelete(id);
   };
 
   const handleEditStatus = () => {
-    SetEditStatus(!editStatus);
+    setEditStatus(!editStatus);
   };
 
   return (

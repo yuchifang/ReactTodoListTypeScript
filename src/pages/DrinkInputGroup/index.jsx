@@ -1,35 +1,26 @@
-import React, { useState } from "react";
+import React, { useRef } from "react";
 import DrinkInput from "./DrinkInput";
 
-const defaultDrink = {
-  name: "",
-  options: "",
-  buyer: ""
-};
 
 const DrinkInputGroup = ({ onCreate }) => {
 
-  const [drink, setDrink] = useState(defaultDrink);
+  const nameRef = useRef(null);
+  const optionsRef = useRef(null);
+  const buyerRef = useRef(null);
 
   const handleCreate = () => {
     let alertArr = [];
 
-    if (!drink.name) {
-      alertArr.push("請填寫飲品名稱");
-    }
-
-    if (!drink.options) {
-      alertArr.push("請填寫糖度冰塊");
-    }
-
-    if (!drink.buyer) {
-      alertArr.push("請填寫訂購人");
-    }
+    let nameValue = nameRef?.current?.value;
+    let optionsValue = optionsRef?.current?.value;
+    let buyerValue = buyerRef?.current?.value;
 
     if (alertArr.length === 0 && !!onCreate) {
-      onCreate(drink)
+      onCreate({ name: nameValue, options: optionsValue, buyer: buyerValue })
         .then(() => {
-          setDrink(defaultDrink);
+          nameRef.current.value = "";
+          optionsRef.current.value = "";
+          buyerRef.current.value = "";
         })
         .catch(() => {
           alert("error");
@@ -39,37 +30,22 @@ const DrinkInputGroup = ({ onCreate }) => {
     }
   };
 
-  const handleBuyer = (e) => {
-    setDrink({ ...drink, buyer: e.target.value });
-  };
-
-  const handleName = (e) => {
-    setDrink({ ...drink, name: e.target.value });
-  };
-
-  const handleOption = (e) => {
-    setDrink({ ...drink, options: e.target.value });
-  };
-
   return (
     <div className="input-group mb-3">
       <DrinkInput
-        onKeyPress={handleCreate}
-        placeholderText="飲品名稱"
-        InputValue={drink.buyer}
-        setValue={handleBuyer}
+        ref={buyerRef}
+        placeholderText="訂購人"
+
         setClassName="form-control"
       />
       <DrinkInput
         placeholderText="飲品名稱"
-        InputValue={drink.name}
-        setValue={handleName}
+        ref={nameRef}
         setClassName="form-control"
       />
       <DrinkInput
         placeholderText="糖度冰塊"
-        InputValue={drink.options}
-        setValue={handleOption}
+        ref={optionsRef}
         setClassName="form-control mr-1"
       />
       <button
